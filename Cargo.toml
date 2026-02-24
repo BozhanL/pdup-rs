@@ -1,0 +1,28 @@
+[package]
+name = "pdup-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1.49", features = [
+    "rt",
+    "rt-multi-thread",
+    "macros",
+    "fs",
+    "io-util",
+] }
+tokio-util = { version = "0.7" }
+futures-util = { version = "0.3" }
+reqwest = { version = "0.13", features = [
+    "stream",
+    "default-tls",
+    "charset",
+    "system-proxy",
+] }
+async-stream = { version = "0.3" }
+
+once_cell = { version = "1.21" }
+clap = { version = "4.5", features = ["std", "derive"] }
+glob = { version = "0.3" }
+
+indicatif = { version = "0.18", features = ["improved_unicode", "tokio"] }
