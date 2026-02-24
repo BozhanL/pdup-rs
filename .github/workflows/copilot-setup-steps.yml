@@ -1,0 +1,31 @@
+name: Copilot Setup Steps
+
+# Automatically run the setup steps when they are changed to allow for easy validation, and
+# allow manual testing through the repository's "Actions" tab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+permissions:
+  contents: read
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 🏗 Checkout repository
+        uses: actions/checkout@v6
+
+      - name: 🏗 Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@1780873c7b576612439a134613cc4cc74ce5538c
+        with:
+          components: clippy, rustfmt
+
+      - name: 🏗️ Build debug
+        run: cargo build

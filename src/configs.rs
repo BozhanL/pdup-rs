@@ -42,8 +42,7 @@ impl Args {
 fn expand_globs(inputs: &[String]) -> Vec<String> {
     let mut v = inputs
         .iter()
-        .map(|i| glob(i).unwrap())
-        .flatten()
+        .flat_map(|i| glob(i).unwrap())
         .map(|entry| entry.unwrap())
         .filter(|p| p.is_file())
         .map(|path| path.to_str().unwrap().to_owned())

@@ -1,0 +1,77 @@
+name: Rust CI/CD
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 🏗 Checkout repository
+        uses: actions/checkout@v6
+
+      - name: 🏗 Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@1780873c7b576612439a134613cc4cc74ce5538c
+        with:
+          components: clippy, rustfmt
+
+      - name: 🧪 Run Cargo check
+        run: cargo check
+
+      - name: 🧹 Run Clippy
+        run: cargo clippy -- -D warnings
+
+      - name: 🎨 Run Cargo fmt
+        run: cargo fmt -- --check
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        include:
+          - profile: debug
+            cargo_args: ""
+          - profile: release
+            cargo_args: --release
+
+    steps:
+      - name: 🏗 Checkout repository
+        uses: actions/checkout@v6
+
+      - name: 🏗 Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@1780873c7b576612439a134613cc4cc74ce5538c
+
+      - name: 🏗️ Build (${{ matrix.profile }})
+        run: cargo build ${{ matrix.cargo_args }}
+
+      - name: 📦 Upload artifact (${{ matrix.profile }})
+        uses: actions/upload-artifact@v5
+        with:
+          name: pdup-rs-${{ matrix.profile }}
+          path: target/${{ matrix.profile }}/pdup-rs
+          if-no-files-found: error
+          retention-days: 7
+
+  collect:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    name: Final Results
+    timeout-minutes: 2
+    needs:
+      - test
+      - build
+    steps:
+      - name: ✔️ Fail if any dependency failed
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
