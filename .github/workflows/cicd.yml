@@ -67,7 +67,7 @@ jobs:
       - name: 📦 Upload artifact (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
         uses: actions/upload-artifact@v5
         with:
-          name: pdup-rs-${{ matrix.build.profile }}
+          name: pdup-rs-${{ matrix.runs-on.os }}-${{ matrix.build.profile }}
           path: target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }}
           if-no-files-found: error
           retention-days: 7
