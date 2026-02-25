@@ -1,7 +1,13 @@
 [package]
 name = "pdup-rs"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2024"
+
+[profile.release]
+opt-level = 3
+debug = "none"
+strip = true
+lto = "fat"
 
 [dependencies]
 tokio = { version = "1.49", features = [

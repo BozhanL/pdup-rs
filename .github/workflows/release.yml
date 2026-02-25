@@ -1,0 +1,75 @@
+name: GitHub Release CI/CD
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ${{ matrix.runs-on.os }}
+    name: build (${{ matrix.runs-on.os }}, ${{ matrix.build.profile }})
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        runs-on:
+          - os: ubuntu-latest
+            binary_ext: ""
+
+          - os: windows-latest
+            binary_ext: .exe
+
+        build:
+          - profile: release
+            cargo_args: --release
+
+          
+            
+    steps:
+      - name: 🏗 Checkout repository
+        uses: actions/checkout@v6
+
+      - name: 🏗 Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@1780873c7b576612439a134613cc4cc74ce5538c
+
+      - name: 🏗️ Build (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
+        run: cargo build ${{ matrix.build.cargo_args }}
+
+      - name: 📦 Upload artifact (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
+        uses: actions/upload-artifact@v5
+        with:
+          name: pdup-rs-${{ matrix.runs-on.os }}-${{ matrix.build.profile }}
+          path: target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }}
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: build
+    permissions:
+      contents: write
+    steps:
+      - name: 📦 Download artifact
+        uses: actions/download-artifact@v7
+        id: download
+        with:
+          pattern: "pdup-rs-*-release"
+          merge-multiple: true
+
+      - name: 📦 Create GitHub Release
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
+        with:
+          fail_on_unmatched_files: true
+          preserve_order: true
+          generate_release_notes: true
+          files: |
+            pdup-rs
+            pdup-rs.exe
