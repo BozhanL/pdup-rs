@@ -35,13 +35,22 @@ jobs:
         run: cargo fmt -- --check
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs-on.os }}
+    name: build (${{ matrix.runs-on.os }}, ${{ matrix.build.profile }})
     timeout-minutes: 5
     strategy:
       matrix:
-        include:
+        runs-on:
+          - os: ubuntu-latest
+            binary_ext: ""
+
+          - os: windows-latest
+            binary_ext: .exe
+
+        build:
           - profile: debug
             cargo_args: ""
+
           - profile: release
             cargo_args: --release
 
@@ -52,14 +61,14 @@ jobs:
       - name: 🏗 Setup Rust
         uses: actions-rust-lang/setup-rust-toolchain@1780873c7b576612439a134613cc4cc74ce5538c
 
-      - name: 🏗️ Build (${{ matrix.profile }})
-        run: cargo build ${{ matrix.cargo_args }}
+      - name: 🏗️ Build (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
+        run: cargo build ${{ matrix.build.cargo_args }}
 
-      - name: 📦 Upload artifact (${{ matrix.profile }})
+      - name: 📦 Upload artifact (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
         uses: actions/upload-artifact@v5
         with:
-          name: pdup-rs-${{ matrix.profile }}
-          path: target/${{ matrix.profile }}/pdup-rs
+          name: pdup-rs-${{ matrix.runs-on.os }}-${{ matrix.build.profile }}
+          path: target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }}
           if-no-files-found: error
           retention-days: 7
 
