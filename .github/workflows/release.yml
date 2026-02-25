@@ -27,12 +27,11 @@ jobs:
             binary_ext: .exe
 
         build:
-          - profile: debug
-            cargo_args: ""
-
           - profile: release
             cargo_args: --release
 
+          
+            
     steps:
       - name: 🏗 Checkout repository
         uses: actions/checkout@v6
