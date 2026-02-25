@@ -6,12 +6,18 @@ updates:
     directory: /
     schedule:
       interval: daily
-    versioning-strategy: increase
     groups:
       patch-and-minor:
         update-types:
           - patch
           - minor
+    assignees:
+      - BozhanL
+
+  - package-ecosystem: rust-toolchain
+    directory: /
+    schedule:
+      interval: daily
     assignees:
       - BozhanL
 
