@@ -17,8 +17,6 @@ jobs:
     runs-on: ${{ matrix.runs-on.os }}
     name: build (${{ matrix.runs-on.os }}, ${{ matrix.build.profile }})
     timeout-minutes: 5
-    outputs:
-      artifact-id: ${{ steps.upload.outputs.artifact-id }}
     strategy:
       matrix:
         runs-on:
