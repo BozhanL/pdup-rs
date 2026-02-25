@@ -65,7 +65,7 @@ jobs:
         run: cargo build ${{ matrix.build.cargo_args }}
 
       - name: 📦 Upload artifact (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: pdup-rs-${{ matrix.runs-on.os }}-${{ matrix.build.profile }}
           path: target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }}
