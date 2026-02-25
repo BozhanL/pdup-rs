@@ -62,7 +62,7 @@ jobs:
         uses: actions/download-artifact@v7
         id: download
         with:
-          pattern: "*-release"
+          pattern: "pdup-rs-*-release"
           merge-multiple: true
 
       - name: 📦 Create GitHub Release

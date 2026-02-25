@@ -1,6 +1,6 @@
 # pdup-rs
 
-Rust programme for uploading to Pixeldrain from the terminal
+Rust program for uploading to Pixeldrain from the terminal
 
 ## Installation
 
