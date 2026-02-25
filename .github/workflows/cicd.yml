@@ -36,22 +36,23 @@ jobs:
 
   build:
     runs-on: ${{ matrix.runs-on.os }}
+    name: build (${{ matrix.runs-on.os }}, ${{ matrix.build.profile }})
     timeout-minutes: 5
     strategy:
       matrix:
-        build:
-          - profile: debug
-            cargo_args: ""
-
-          - profile: release
-            cargo_args: --release
-
         runs-on:
           - os: ubuntu-latest
             binary_ext: ""
 
           - os: windows-latest
             binary_ext: .exe
+
+        build:
+          - profile: debug
+            cargo_args: ""
+
+          - profile: release
+            cargo_args: --release
 
     steps:
       - name: 🏗 Checkout repository
