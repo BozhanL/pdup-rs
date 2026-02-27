@@ -49,6 +49,7 @@ jobs:
           path: target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }}
           if-no-files-found: error
           retention-days: 7
+          archive: false
 
   release:
     runs-on: ubuntu-latest
