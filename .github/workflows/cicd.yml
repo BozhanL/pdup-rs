@@ -64,13 +64,16 @@ jobs:
       - name: 🏗️ Build (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
         run: cargo build ${{ matrix.build.cargo_args }}
 
+      - name: 📦 Rename binary
+        run: mv target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }} target/${{ matrix.build.profile }}/pdup-rs-${{ matrix.build.profile }}${{ matrix.runs-on.binary_ext }}
+
       - name: 📦 Upload artifact (${{ matrix.runs-on.os }} / ${{ matrix.build.profile }})
         uses: actions/upload-artifact@v7
         with:
-          name: pdup-rs-${{ matrix.runs-on.os }}-${{ matrix.build.profile }}
-          path: target/${{ matrix.build.profile }}/pdup-rs${{ matrix.runs-on.binary_ext }}
+          path: target/${{ matrix.build.profile }}/pdup-rs-${{ matrix.build.profile }}${{ matrix.runs-on.binary_ext }}
           if-no-files-found: error
           retention-days: 7
+          archive: false
 
   collect:
     if: ${{ always() }}
