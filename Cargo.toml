@@ -10,7 +10,7 @@ strip = true
 lto = "fat"
 
 [dependencies]
-tokio = { version = "1.49", features = [
+tokio = { version = "1.50", features = [
     "rt",
     "rt-multi-thread",
     "macros",
