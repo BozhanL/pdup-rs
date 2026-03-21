@@ -5,7 +5,7 @@ updates:
   - package-ecosystem: cargo
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
     groups:
       patch-and-minor:
         update-types:
@@ -17,14 +17,14 @@ updates:
   - package-ecosystem: rust-toolchain
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
     assignees:
       - BozhanL
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
     groups:
       patch-and-minor:
         update-types:
