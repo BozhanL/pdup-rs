@@ -32,8 +32,6 @@ jobs:
           comment-summary-in-pr: always
           allow-licenses: AGPL-3.0-or-later
 
-          retry-on-snapshot-warnings: true
-
           fail-on-severity: low
           license-check: true
           vulnerability-check: true
