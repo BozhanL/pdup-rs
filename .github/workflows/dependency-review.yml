@@ -15,17 +15,22 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: 🏗 Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@d197c158264056996cfba74a9c2d93886346edc3
+
+      - name: Component detection
+        uses: advanced-security/component-detection-dependency-submission-action@v0.1.1
 
       - name: Dependency Review
         uses: actions/dependency-review-action@v4
         with:
           comment-summary-in-pr: always
-          allow-licenses: AGPL-3.0-or-later
-
-          retry-on-snapshot-warnings: true
+          allow-licenses: AGPL-3.0-or-later, MIT, Apache-2.0, ISC, Unicode-3.0, BSD-3-Clause, CDLA-Permissive-2.0
 
           fail-on-severity: low
           license-check: true
