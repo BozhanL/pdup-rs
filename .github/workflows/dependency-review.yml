@@ -19,6 +19,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: 🏗 Setup Rust
+        uses: actions-rust-lang/setup-rust-toolchain@d197c158264056996cfba74a9c2d93886346edc3
+
+      - name: Component detection
+        uses: advanced-security/component-detection-dependency-submission-action@v0.1.1
+
       - name: Dependency Review
         uses: actions/dependency-review-action@v4
         with:
