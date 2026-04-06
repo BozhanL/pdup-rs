@@ -1,0 +1,12 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    "security:openssf-scorecard",
+    "helpers:disableTypesNodeMajor",
+    ":prImmediately"
+  ],
+  "ignorePresets": ["security:minimumReleaseAgeNpm"],
+  "minimumReleaseAge": "30 days",
+  "timezone": "Pacific/Auckland"
+}
