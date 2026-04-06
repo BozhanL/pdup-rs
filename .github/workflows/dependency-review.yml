@@ -30,7 +30,7 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           comment-summary-in-pr: always
-          allow-licenses: AGPL-3.0-or-later
+          allow-licenses: AGPL-3.0-or-later, MIT, Apache-2.0, ISC, Unicode-3.0, BSD-3-Clause, CDLA-Permissive-2.0
 
           fail-on-severity: low
           license-check: true
