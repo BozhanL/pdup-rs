@@ -23,7 +23,7 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           comment-summary-in-pr: always
-          allow-licenses: GPL-3.0-or-later
+          allow-licenses: AGPL-3.0-or-later
 
           fail-on-severity: low
           license-check: true
