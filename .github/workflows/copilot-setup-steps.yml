@@ -11,13 +11,14 @@ on:
     paths:
       - .github/workflows/copilot-setup-steps.yml
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   copilot-setup-steps:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - name: 🏗 Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
