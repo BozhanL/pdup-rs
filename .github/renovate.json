@@ -3,9 +3,10 @@
   "extends": [
     "config:best-practices",
     "helpers:disableTypesNodeMajor",
-    ":prImmediately"
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":label(dependencies)"
   ],
   "ignorePresets": ["security:minimumReleaseAgeNpm"],
-  "minimumReleaseAge": "30 days",
+  "postUpdateOptions": ["npmDedupe", "npmInstallTwice"],
   "timezone": "Pacific/Auckland"
 }
