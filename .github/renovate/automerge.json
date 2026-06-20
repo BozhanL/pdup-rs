@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    ":automergePr",
+    ":automergeRequireAllStatusChecks",
+    ":automergeLinters",
+    ":automergeTesters",
+    ":automergeDigest",
+    ":automergePatch"
+  ],
+
+  "packageRules": [
+    {
+      "matchCategories": ["ci"],
+      "automerge": true
+    }
+  ]
+}

@@ -2,11 +2,13 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices",
-    "helpers:disableTypesNodeMajor",
     "helpers:pinGitHubActionDigestsToSemver",
-    ":label(dependencies)"
+    ":timezone(Pacific/Auckland)",
+
+    ":assignAndReview(BozhanL)",
+
+    "local>BozhanL/BozhanL/pdup-rs//.github/renovate/automerge"
   ],
-  "ignorePresets": ["security:minimumReleaseAgeNpm"],
-  "postUpdateOptions": ["npmDedupe", "npmInstallTwice"],
-  "timezone": "Pacific/Auckland"
+
+  "labels": ["dependencies", "{{{manager}}}"]
 }
