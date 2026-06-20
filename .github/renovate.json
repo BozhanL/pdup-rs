@@ -7,7 +7,7 @@
 
     ":assignAndReview(BozhanL)",
 
-    "local>BozhanL/BozhanL/pdup-rs//.github/renovate/automerge"
+    "local>BozhanL/pdup-rs//.github/renovate/automerge"
   ],
 
   "labels": ["dependencies", "{{{manager}}}"]
